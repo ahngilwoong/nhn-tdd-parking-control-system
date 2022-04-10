@@ -1,4 +1,5 @@
 package parkingtest;
 
-public class CommonTest  {
+public class CommonTest{
+
 }

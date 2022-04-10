@@ -41,6 +41,4 @@ public class ParkingLot {
         this.parkingLotSpaces.remove(area);
     }
 
-
-
 }

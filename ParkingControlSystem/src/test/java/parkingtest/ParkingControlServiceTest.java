@@ -34,7 +34,8 @@ public class ParkingControlServiceTest {
     void parking_in_a_specific_area(){
         User user = new User(20_000);
         Car car = new Car("12하 3456", user);
-        assertThat(service.parkingSpecificArea("A-1",car)).isEqualTo(car);
+        service.parkingSpecificArea("A-1",car);
+        assertThat(service.checkForParking("A-1")).isEqualTo(car);
     }
 
     @Test
@@ -42,8 +43,8 @@ public class ParkingControlServiceTest {
     void exit_fee_notify(){
         User user = new User(20_000);
         Car car = new Car("12하 3456",user);
-        assertThat(service.parkingSpecificArea("A-1",car)).isEqualTo(car);// 차를 한번 주차했다가
-        assertThat(service.getFee("A-1")).isEqualTo(12500); // LocalTime.now를 써서 12:00 ~ 현재 코딩하는 시간 16시13분 now의 결과가 12500 성공
+        service.parkingSpecificArea("A-1",car);// 차를 한번 주차했다가
+        assertThat(service.getFee("A-1")).isEqualTo(11000); // LocalTime.now를 써서 12:00 ~ 현재 코딩하는 시간 16시13분 now의 결과가 12500 성공
     }
 
     @Test
@@ -51,7 +52,7 @@ public class ParkingControlServiceTest {
     void payment_after_exit_parking_lot(){
         User user = new User(20_000);
         Car car = new Car("12하 3456",user);
-        assertThat(service.parkingSpecificArea("A-1",car)).isEqualTo(car);// 차를 한번 주차했다가
+        service.parkingSpecificArea("A-1",car);;// 차를 한번 주차했다가
         assertThat(service.exitParkingLot("A-1")).isEqualTo(0); // 계산을 해고 뺐으니 size는 0이여야한다.
     }
 
@@ -60,9 +61,18 @@ public class ParkingControlServiceTest {
     void no_money_no_leave(){
         User user = new User(100);
         Car car = new Car("12하 3456",user);
-        assertThat(service.parkingSpecificArea("A-1",car)).isEqualTo(car);// 차를 한번 주차했다가
+        service.parkingSpecificArea("A-1",car);;// 차를 한번 주차했다가
         assertThatThrownBy(()->service.exitParkingLot("A-1"))
             .isInstanceOf(MoneyNegativeException.class)
             .hasMessageContaining("잔액","부족");
+    }
+
+    @Test
+    @DisplayName("요금표 변경")
+    void change_the_price_table_and_car_level_check(){
+        User user = new User(20_000);
+        Car car = new Car("12하 3456",user);
+        service.parkingSpecificArea("A-1",car);// 차를 한번 주차했다가
+        assertThat(service.getFee("A-1")).isEqualTo(11000); // 변경된 요금표로 리턴
     }
 }

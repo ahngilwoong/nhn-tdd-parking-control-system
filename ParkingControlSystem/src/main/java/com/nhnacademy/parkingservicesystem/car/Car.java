@@ -1,12 +1,13 @@
 package com.nhnacademy.parkingservicesystem.car;
 
 import com.nhnacademy.parkingservicesystem.user.User;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
 public class Car {
     private String licensePlate;
-    private LocalTime enterTime;
+    private LocalDateTime enterTime;
     private User user;
 
     public Car(String licensePlate, User user) {
@@ -19,11 +20,11 @@ public class Car {
     }
 
 
-    public LocalTime getEnterTime() {
+    public LocalDateTime getEnterTime() {
         return enterTime;
     }
 
-    public void setEnterTime(LocalTime enterTime) {
+    public void setEnterTime(LocalDateTime enterTime) {
         this.enterTime = enterTime;
     }
 

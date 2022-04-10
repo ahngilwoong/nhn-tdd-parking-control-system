@@ -10,8 +10,11 @@ public class ParkingControlService {
         return parkingLot.alertCarNumber(targetCar);
     }
 
-    public Car parkingSpecificArea(String parkingArea, Car car) {
+    public void parkingSpecificArea(String parkingArea, Car car) {
         parkingLot.enterParkingCar(parkingArea,car);
+    }
+
+    public Car checkForParking(String parkingArea) {
         return parkingLot.getSpaces().get(parkingArea);
     }
 
